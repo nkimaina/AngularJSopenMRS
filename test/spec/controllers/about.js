@@ -4,6 +4,7 @@ describe('Controller: AboutCtrl', function () {
 
   // load the controller's module
   beforeEach(module('openMrsangularjsApp'));
+  //beforeEach(module('authorization'));
 
   var AboutCtrl,
     scope;

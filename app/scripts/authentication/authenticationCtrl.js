@@ -6,8 +6,8 @@
 
 var authModule =  angular.module('authentication');
 
-authModule.controller('AuthenticationCtrl', ['$scope', 'Authentication','$location',
-  function ($scope, Authentication, $location) {
+authModule.controller('AuthenticationCtrl', ['$scope', 'Authentication','$state','$stateParams',
+  function ($scope, Authentication,$state, $stateParams) {
   var credentials = {
     username:'',
     password:''
@@ -20,8 +20,9 @@ authModule.controller('AuthenticationCtrl', ['$scope', 'Authentication','$locati
   };
 
   function onSuccessfulValidation(){
-    //redirect to patient search view
-    $location.path('/patientSearch');
+    if($stateParams.onSuccessRout){
+      $state.go($stateParams.onSuccessRout,$stateParams.onSuccessParams);
+    }
   };
 
   function onFailedValidation(reason){

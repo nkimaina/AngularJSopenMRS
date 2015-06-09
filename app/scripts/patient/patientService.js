@@ -6,7 +6,7 @@ var authService = angular.module('patient');
 authService.factory('Patient', ['$http', '$resource',
   function ($http, $resource) {
 
-    var urlBase = 'https://10.50.80.75:8443/amrs/ws/rest/v1/';
+    var urlBase = 'https://test1.ampath.or.ke:8443/amrs/ws/rest/v1/';
 
     var serviceDefinition = {};
 

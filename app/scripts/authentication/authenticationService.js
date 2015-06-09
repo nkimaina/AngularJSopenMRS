@@ -6,7 +6,7 @@ var authService = angular.module('authentication');
 authService.factory('Authentication', ['$http', '$rootScope', '$resource', '$base64',
   function ($http, $rootScope, $resource, base64) {
 
-    var urlBase = 'https://10.50.80.75:8443/amrs/ws/rest/v1/';
+    var urlBase = 'https://test1.ampath.or.ke:8443/amrs/ws/rest/v1/';
 
     var serviceDefinition = {};
 
@@ -27,8 +27,6 @@ authService.factory('Authentication', ['$http', '$rootScope', '$resource', '$bas
             serviceDefinition.isAuthenticated = true;
             if(onValidated)
               onValidated();
-            if(redirectUrl)
-              $location.path(redirectUrl);
           }
           else{
             console.log("Authentication failed");
@@ -40,7 +38,7 @@ authService.factory('Authentication', ['$http', '$rootScope', '$resource', '$bas
         .catch (function(errorMsg) {
         console.log("Something went wrong : " + errorMsg);
         if(onValidationFailed){
-          onValidationFailed("Error:" + errorMsg);
+          onValidationFailed("Something went wrong. Retry again." );
         }
         });
     };

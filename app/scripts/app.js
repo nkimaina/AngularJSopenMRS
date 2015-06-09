@@ -38,7 +38,8 @@ angular
       .state('login', {
         url: "/login",
         templateUrl: "views/authentication/login.html",
-        controller:'AuthenticationCtrl'
+        controller:'AuthenticationCtrl',
+        params: {onSuccessRout:null, onSuccessParams:null}
       })
       .state('patientSearch', {
         url: "/patientSearch",
@@ -56,7 +57,7 @@ angular
 
     if(shouldLogin)
     {
-      $state.go('login');
+      $state.go('login',{onSuccessRout:toState, onSuccessParams:toParams});
       event.preventDefault();
       return;
     }
