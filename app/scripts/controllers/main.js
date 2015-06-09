@@ -15,8 +15,4 @@ angular.module('openMrsangularjsApp')
       'Karma'
     ];
 
-    if(auth.isAuthenticated === false){
-      //redirect to login
-      $location.path('/login');
-    }
   }]);

@@ -9,10 +9,6 @@ var containingModule =  angular.module('patient');
 containingModule.controller('PatientSearchCtrl', ['$scope', 'Authentication','$location','Patient',
   function ($scope, Authentication, $location, Patient){
 
-    if(Authentication.isAuthenticated === false){
-      $location.path('/login');
-    }
-
     $scope.searchText = '';
     $scope.searchFor = '';
     $scope.results = [];

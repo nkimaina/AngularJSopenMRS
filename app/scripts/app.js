@@ -16,28 +16,51 @@ angular
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'ui.router',
     'authentication',
     'patient'
   ])
-  .config(function ($routeProvider) {
-    $routeProvider
-      .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+  .config(function ($stateProvider, $urlRouterProvider) {
+    $urlRouterProvider.otherwise("/");
+    $stateProvider
+      .state('home', {
+        url: "/",
+        templateUrl: "views/main.html",
+        controller:'MainCtrl',
+        data : {requireLogin : true }
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
+      .state('about', {
+        url: "/about",
+        templateUrl: "views/about.html",
+        controller: 'AboutCtrl',
+        data : {requireLogin : true }
       })
-      .when('/login', {
-        templateUrl: 'views/authentication/login.html',
-        controller: 'AuthenticationCtrl'
+      .state('login', {
+        url: "/login",
+        templateUrl: "views/authentication/login.html",
+        controller:'AuthenticationCtrl'
       })
-      .when('/patientSearch', {
-        templateUrl: 'views/patient/patientSearch.html',
-        controller: 'PatientSearchCtrl'
-      })
-      .otherwise({
-        redirectTo: '/'
+      .state('patientSearch', {
+        url: "/patientSearch",
+        templateUrl: "views/patient/patientSearch.html",
+        controller: 'PatientSearchCtrl',
+        data : {requireLogin : true }
       });
+  }).run(function ($rootScope, $state, $location, Authentication) {
+
+  $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState) {
+
+    var shouldLogin = toState.data !== undefined
+      && toState.data.requireLogin
+      && !Authentication.isAuthenticated ;
+
+    if(shouldLogin)
+    {
+      $state.go('login');
+      event.preventDefault();
+      return;
+    }
+    //else navigate to page
+
   });
+});
