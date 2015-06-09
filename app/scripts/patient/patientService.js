@@ -10,9 +10,9 @@ authService.factory('Patient', ['$http', '$resource',
 
     var serviceDefinition = {};
 
-    serviceDefinition.findPatients = function(searchtext, onQueryCompleted) {
+    serviceDefinition.findPatients = function(searchvalue, onQueryCompleted) {
 
-      $resource(urlBase + 'patient?q=:text').get( { searchText: searchtext })
+      $resource(urlBase + 'patient?=q:text&limit=10',{text:'@q'}).get({ q: searchvalue })
         .$promise
         .then(function(responce){
           onQueryCompleted(responce.results);

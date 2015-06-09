@@ -20,7 +20,7 @@ containingModule.controller('PatientSearchCtrl', ['$scope', 'Authentication','$l
     $scope.findPatients = function(){
       $scope.searchFor = $scope.searchText;
       $scope.searchText = "Searching..";
-      Patient.findPatients(function(searchResults){
+      Patient.findPatients($scope.searchFor,function(searchResults){
         $scope.searchText = $scope.searchFor;
         $scope.results = searchResults;
       })
