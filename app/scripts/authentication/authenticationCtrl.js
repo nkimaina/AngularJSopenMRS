@@ -23,10 +23,10 @@ authModule.controller('AuthenticationCtrl', ['$scope', 'Authentication','$state'
     if($stateParams.onSuccessRout){
       $state.go($stateParams.onSuccessRout,$stateParams.onSuccessParams);
     }
-  };
+  }
 
   function onFailedValidation(reason){
     $scope.errorMessage = reason;
-  };
+  }
 
 }]);

@@ -3,7 +3,12 @@
 describe('Controller: MainCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('openMrsangularjsApp'));
+  beforeEach(function() {
+    module('authentication');
+    module('openMrsangularjsApp');
+  });
+
+
 
   var MainCtrl,
     scope;

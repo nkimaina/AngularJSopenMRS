@@ -1,6 +1,9 @@
 /**
  * Created by nicky on 6/8/15.
  */
+
+'use strict';
+
 var authService = angular.module('authentication');
 
 authService.factory('Authentication', ['$http', '$rootScope', '$resource', '$base64',
@@ -17,7 +20,7 @@ authService.factory('Authentication', ['$http', '$rootScope', '$resource', '$bas
     serviceDefinition.getSession = function () {
       return $resource(urlBase + 'session');
     };
-    serviceDefinition.authenticateUser = function (username, password, onValidated, onValidationFailed, redirectUrl) {
+    serviceDefinition.authenticateUser = function (username, password, onValidated, onValidationFailed) {
       setUpHttpAuthenticationHeaders(username, password);
       $resource(urlBase + 'session?').get({})
         .$promise
@@ -25,26 +28,27 @@ authService.factory('Authentication', ['$http', '$rootScope', '$resource', '$bas
           if(responce.authenticated === true){
             serviceDefinition.currentSession = responce.sessionId;
             serviceDefinition.isAuthenticated = true;
-            if(onValidated)
+            if(onValidated){
               onValidated();
+            }
           }
           else{
-            console.log("Authentication failed");
+            console.log('Authentication failed');
             if(onValidationFailed){
-              onValidationFailed("The supplied user name or password is incorrect." );
+              onValidationFailed('The supplied user name or password is incorrect.' );
             }
           }
         })
         .catch (function(errorMsg) {
-        console.log("Something went wrong : " + errorMsg);
+        console.log('Something went wrong : ' + errorMsg);
         if(onValidationFailed){
-          onValidationFailed("Something went wrong. Retry again." );
+          onValidationFailed('Something went wrong. Retry again.' );
         }
         });
     };
 
     function setUpHttpAuthenticationHeaders(username, password) {
-      $http.defaults.headers.common['Authorization'] = 'Basic ' + base64.encode(username + ':' + password);
+      $http.defaults.headers.common.Authorization = 'Basic ' + base64.encode(username + ':' + password);
     }
     return serviceDefinition;
   }]);

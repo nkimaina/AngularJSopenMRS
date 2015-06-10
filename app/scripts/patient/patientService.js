@@ -1,6 +1,9 @@
 /**
  * Created by nicky on 6/8/15.
  */
+
+  'use strict';
+
 var authService = angular.module('patient');
 
 authService.factory('Patient', ['$http', '$resource',
@@ -18,7 +21,7 @@ authService.factory('Patient', ['$http', '$resource',
           onQueryCompleted(responce.results);
         })
         .catch (function(errorMsg) {
-         console.log("Something went wrong : " + errorMsg);
+         console.log('Something went wrong : ' + errorMsg);
       });
     };
 

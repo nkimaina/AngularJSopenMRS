@@ -3,8 +3,11 @@
 describe('Controller: AboutCtrl', function () {
 
   // load the controller's module
-  beforeEach(module('openMrsangularjsApp'));
-  //beforeEach(module('authorization'));
+  beforeEach(function() {
+    module('authentication');
+    module('openMrsangularjsApp');
+  });
+
 
   var AboutCtrl,
     scope;
