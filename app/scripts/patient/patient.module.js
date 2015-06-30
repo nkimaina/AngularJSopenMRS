@@ -4,4 +4,4 @@
 
 'use strict';
 
-angular.module('patient', ['ngResource','authentication']);
+angular.module('patient', ['ngResource','authentication','ui.select','ngSanitize']);

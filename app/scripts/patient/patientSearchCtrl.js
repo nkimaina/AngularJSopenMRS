@@ -13,14 +13,22 @@ containingModule.controller('PatientSearchCtrl', ['$scope', 'Authentication','$l
     $scope.searchFor = '';
     $scope.results = [];
 
-    $scope.findPatients = function(){
-      $scope.searchFor = $scope.searchText;
-      $scope.searchText = 'Searching..';
-      Patient.findPatients($scope.searchFor,function(searchResults){
-        $scope.searchText = $scope.searchFor;
-        $scope.results = searchResults;
+    $scope.patient = { };
+
+    //$scope.findPatients = function(){
+    //  $scope.searchFor = $scope.searchText;
+    //  $scope.searchText = 'Searching..';
+    //  Patient.findPatients($scope.searchFor,function(searchResults){
+    //    $scope.searchText = $scope.searchFor;
+    //    $scope.results = searchResults;
+    //  });
+    //};
+
+    $scope.findPatients = function(searchText){
+      Patient.findPatients(searchText,function(searchResults){
+            $scope.results = searchResults;
       });
-    };
+    }
 
 
 }]);

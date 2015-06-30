@@ -1,23 +1,15 @@
 
-<h1>Patient Search</h1>
-<div class="row">
-  <input type="text" name="searchPatient" id="searchPatient" ng-model="searchText" placeholder="Search Patient"/>
-  <input type="button" id="search" value="Search" ng-click="findPatients()"/>
+<div>
+  {{patient}}
 </div>
-<div class="row">
-  <table class="table table-bordered">
-    <thead>
-    <tr>
-    <th>
-      Patient
-    </th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="result in results">
-      <td>{{result.display}}</td>
-    </tr>
-    </tbody>
+<ui-select ng-model="patient.selected"
 
-  </table>
-</div>
+           reset-search-input="false"  style="width:300px" >
+  <ui-select-match placeholder="Enter a person's name...">{{$select.selected.person.display}}</ui-select-match>
+  <ui-select-choices repeat="patient in results track by $index"
+                     refresh="findPatients($select.search)"
+                     refresh-delay="200">
+    <div ng-bind-html="patient.person.display | highlight: $select.search"></div>
+  </ui-select-choices>
+</ui-select>
+
