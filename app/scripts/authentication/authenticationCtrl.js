@@ -2,7 +2,7 @@
  * Created by nicky on 6/8/15.
  */
 'use strict';
-//this is supposed to be a conflict
+//this is supposed to be a edasdasd
 
 var authModule =  angular.module('authentication');
 
