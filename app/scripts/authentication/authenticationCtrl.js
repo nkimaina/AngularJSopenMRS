@@ -2,7 +2,7 @@
  * Created by nicky on 6/8/15.
  */
 'use strict';
-//this is the conflict
+//this is supposed to be a conflict
 
 var authModule =  angular.module('authentication');
 
