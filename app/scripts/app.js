@@ -50,7 +50,7 @@ angular
   }).run(function ($rootScope, $state, $location, Authentication) {
 
   $rootScope.$on('$stateChangeStart', function (event, toState, toParams) {
-
+    Authentication.updateHeaders();
     var shouldLogin = toState.data !== undefined && toState.data.requireLogin && !Authentication.isAuthenticated ;
 
     if(shouldLogin)

@@ -6,14 +6,22 @@
 
 var authService = angular.module('authentication');
 
-authService.factory('Authentication', ['$http', '$rootScope', '$resource', '$base64',
-  function ($http, $rootScope, $resource, base64) {
+authService.factory('Authentication', ['$http', '$rootScope', '$resource', '$base64', '$cookies',
+  function ($http, $rootScope, $resource, base64, $cookies) {
 
     var urlBase = 'https://test1.ampath.or.ke:8443/amrs/ws/rest/v1/';
 
     var serviceDefinition = {};
 
     serviceDefinition.isAuthenticated = false;
+
+    serviceDefinition.updateHeaders = function(){
+      var authHeader = serviceDefinition.getAuthenticationCookie();
+      if(authHeader){
+        serviceDefinition.isAuthenticated = true;
+        setUpHttpAuthenticationHeaders(null,null,authHeader);
+      }
+    };
 
     serviceDefinition.currentSession = null;
 
@@ -28,6 +36,7 @@ authService.factory('Authentication', ['$http', '$rootScope', '$resource', '$bas
           if(responce.authenticated === true){
             serviceDefinition.currentSession = responce.sessionId;
             serviceDefinition.isAuthenticated = true;
+            serviceDefinition.setAuthenticationCookie(username, password);
             if(onValidated){
               onValidated();
             }
@@ -46,9 +55,23 @@ authService.factory('Authentication', ['$http', '$rootScope', '$resource', '$bas
         }
         });
     };
+    serviceDefinition.setAuthenticationCookie = function (username, password){
+      var value = 'Basic' + base64.encode(username + ':' + password);
+      $cookies.put('Authorization',value);
+    };
 
-    function setUpHttpAuthenticationHeaders(username, password) {
+    serviceDefinition.getAuthenticationCookie =function (){
+      return $cookies.get('Authorization');
+    };
+
+    function setUpHttpAuthenticationHeaders(username, password, hashedValue) {
+      if(hashedValue){
+        $http.defaults.headers.common.Authorization = hashedValue;
+        return;
+      }
       $http.defaults.headers.common.Authorization = 'Basic ' + base64.encode(username + ':' + password);
     }
+
+
     return serviceDefinition;
   }]);

@@ -4,4 +4,4 @@
 
 'use strict';
 
-angular.module('authentication', ['ngResource','base64']);
+angular.module('authentication', ['ngResource','base64','ngCookies']);
