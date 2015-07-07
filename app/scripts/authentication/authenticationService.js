@@ -16,11 +16,12 @@ authService.factory('Authentication', ['$http', '$rootScope', '$resource', '$bas
     serviceDefinition.isAuthenticated = false;
 
     serviceDefinition.updateHeaders = function(){
-      var authHeader = serviceDefinition.getAuthenticationCookie();
+      serviceDefinition.isAuthenticated = true;
+     /* var authHeader = serviceDefinition.getAuthenticationCookie();
       if(authHeader){
         serviceDefinition.isAuthenticated = true;
         setUpHttpAuthenticationHeaders(null,null,authHeader);
-      }
+       */
     };
 
     serviceDefinition.currentSession = null;
@@ -56,7 +57,7 @@ authService.factory('Authentication', ['$http', '$rootScope', '$resource', '$bas
         });
     };
     serviceDefinition.setAuthenticationCookie = function (username, password){
-      var value = 'Basic' + base64.encode(username + ':' + password);
+      var value = 'Basic ' + base64.encode(username + ':' + password);
       $cookies.put('Authorization',value);
     };
 

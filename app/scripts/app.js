@@ -20,7 +20,11 @@ angular
     'authentication',
     'patient'
   ])
-  .config(function ($stateProvider, $urlRouterProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+    //register interceptor
+    $httpProvider.interceptors.push('httpInterceptor');
+    
+    
     $urlRouterProvider.otherwise('/');
     $stateProvider
       .state('home', {
